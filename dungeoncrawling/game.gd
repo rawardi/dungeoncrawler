@@ -10,7 +10,7 @@ var start=true
 @onready var commandprocessor=$commandprocessor
 func _ready() -> void:
 	var starting_message=respondlabel.instantiate()
-	starting_message.text=("Type anything to start the game")
+	starting_message.text=("Type \"start\" to start the game")
 	write_game_response(starting_message)
 
 
@@ -34,7 +34,11 @@ func write_game_response(response):
 
 
 func clearinputoutput():
-	# Clear previous input response
+	var maxline=0
+	# Clear previous input response with cap of 20
 	for child in result.get_children():
-		child.queue_free()
+		maxline+=1
 		playerinput.text=""
+	if maxline >=20 :
+		var first_child=result.get_child(0)
+		first_child.queue_free()

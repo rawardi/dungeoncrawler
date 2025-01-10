@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://byoj7lgf7v7sx"]
+[gd_scene load_steps=5 format=3 uid="uid://byoj7lgf7v7sx"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_q1scb"]
 [ext_resource type="Script" path="res://commandprocessor.gd" id="2_b1lvj"]
+[ext_resource type="Texture2D" uid="uid://dso6lcvu0ekpy" path="res://icon.svg" id="3_e4ldw"]
 
 [sub_resource type="Theme" id="Theme_1tw7a"]
 default_font_size = 8
@@ -44,6 +45,7 @@ size_flags_vertical = 3
 
 [node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/MarginContainer/VBoxContainer/Output"]
 layout_mode = 2
+follow_focus = true
 
 [node name="result" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/Output/ScrollContainer"]
 layout_mode = 2
@@ -53,5 +55,22 @@ layout_mode = 2
 
 [node name="LineEdit" type="LineEdit" parent="PanelContainer/MarginContainer/VBoxContainer/input"]
 layout_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(96, -160)
+scale = Vector2(0.375, 0.3125)
+texture = ExtResource("3_e4ldw")
+
+[node name="right" type="RayCast2D" parent="Sprite2D"]
+target_position = Vector2(85.3333, 0)
+
+[node name="RayCast2D2" type="RayCast2D" parent="Sprite2D"]
+target_position = Vector2(-85.3333, 0)
+
+[node name="RayCast2D3" type="RayCast2D" parent="Sprite2D"]
+target_position = Vector2(0, 102.4)
+
+[node name="RayCast2D4" type="RayCast2D" parent="Sprite2D"]
+target_position = Vector2(0, -102.4)
 
 [connection signal="text_submitted" from="PanelContainer/MarginContainer/VBoxContainer/input/LineEdit" to="." method="_on_line_edit_text_submitted"]
