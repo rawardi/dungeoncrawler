@@ -6,12 +6,16 @@ var travel=false
 @onready var room1=$roomhandler/room1
 @onready var room2=$roomhandler/room2
 @onready var room3=$roomhandler/room3
+@onready var playerpos=$roomhandler/Sprite2D
 var can_go_right = false
-@onready var currentroomright=$roomhandler/room1
+var currentroomright :Node2D
 var targetroomright :Node2D 
 var can_go_left=false
 @onready var currentroomleft=$roomhandler/room1
 var targetroomleft :Node2D 
+func _ready() -> void:
+	currentroomleft =room1
+	currentroomright=room1
 func  process(input:String) :
 	if start == false :
 		match input :
@@ -25,8 +29,9 @@ func  process(input:String) :
 			"right" :
 				if can_go_right:
 					travel=false
-					$roomhandler/Sprite2D.global_position=targetroomright.global_position
+					playerpos.global_position=targetroomright.global_position
 					currentroomright=targetroomright
+					print(currentroomright)
 					can_go_right=false
 					return "You go right."
 				else:
@@ -35,7 +40,7 @@ func  process(input:String) :
 			"left" :
 				if can_go_left:
 					travel=false
-					$roomhandler/Sprite2D.global_position=targetroomleft.global_position
+					playerpos.global_position=targetroomleft.global_position
 					currentroomleft=targetroomleft
 					can_go_left=false
 					return "You go left."
@@ -76,16 +81,12 @@ func checkinventory(input:String) :
 	return "check Inventory"
 
 
-func _on_right_area_entered(area: Area2D) -> void:
-	targetroomright=area
-	can_go_right=true
-
-
-func _on_left_area_entered(area: Area2D) -> void:
-	targetroomleft=area
-	can_go_left=true
-
-
 func _on_right_body_entered(body: Node2D) -> void:
 	targetroomright=body
+	print(currentroomright)
 	can_go_right=true
+
+
+func _on_left_body_entered(body: Node2D) -> void:
+	targetroomleft=body
+	can_go_left=true

@@ -4,11 +4,11 @@
 [ext_resource type="Script" path="res://commandprocessor.gd" id="2_b1lvj"]
 [ext_resource type="Texture2D" uid="uid://dso6lcvu0ekpy" path="res://icon.svg" id="3_e4ldw"]
 
-[sub_resource type="SegmentShape2D" id="SegmentShape2D_1hg2q"]
-b = Vector2(128, 0)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u1ykk"]
+size = Vector2(74, 102.4)
 
-[sub_resource type="SegmentShape2D" id="SegmentShape2D_5tfn6"]
-b = Vector2(-149.333, 3.2)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ikhcg"]
+size = Vector2(85.3334, 102.4)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qode4"]
 size = Vector2(40, 33)
@@ -29,23 +29,30 @@ script = ExtResource("1_q1scb")
 script = ExtResource("2_b1lvj")
 
 [node name="roomhandler" type="Node2D" parent="commandprocessor"]
-position = Vector2(160, 72)
+position = Vector2(232, 136)
 
 [node name="Sprite2D" type="Sprite2D" parent="commandprocessor/roomhandler"]
-position = Vector2(0, -1)
+position = Vector2(0, 1.19209e-07)
 scale = Vector2(0.375, 0.3125)
 texture = ExtResource("3_e4ldw")
 
 [node name="right" type="Area2D" parent="commandprocessor/roomhandler/Sprite2D"]
+position = Vector2(64, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="commandprocessor/roomhandler/Sprite2D/right"]
-shape = SubResource("SegmentShape2D_1hg2q")
+position = Vector2(42.6667, 0)
+scale = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_u1ykk")
 one_way_collision_margin = 0.0
 
 [node name="left" type="Area2D" parent="commandprocessor/roomhandler/Sprite2D"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="commandprocessor/roomhandler/Sprite2D/left"]
-shape = SubResource("SegmentShape2D_5tfn6")
+position = Vector2(-106.667, 0)
+scale = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_ikhcg")
+one_way_collision_margin = 0.0
+debug_color = Color(0.997081, 0, 0.173671, 0.42)
 
 [node name="down" type="RayCast2D" parent="commandprocessor/roomhandler/Sprite2D"]
 target_position = Vector2(0, 102.4)
@@ -56,25 +63,35 @@ target_position = Vector2(0, -102.4)
 collide_with_areas = true
 
 [node name="room1" type="StaticBody2D" parent="commandprocessor/roomhandler"]
+modulate = Color(1, 0, 1, 1)
 position = Vector2(-8, 16)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="commandprocessor/roomhandler/room1"]
-position = Vector2(12, -16.5)
+position = Vector2(8, -17)
 shape = SubResource("RectangleShape2D_qode4")
 
+[node name="Node2D" type="Node2D" parent="commandprocessor/roomhandler/room1"]
+position = Vector2(8, -16)
+
 [node name="room2" type="StaticBody2D" parent="commandprocessor/roomhandler"]
+modulate = Color(0, 1, 0, 1)
 position = Vector2(64, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="commandprocessor/roomhandler/room2"]
 position = Vector2(0, -1)
 shape = SubResource("RectangleShape2D_qode4")
 
+[node name="Node2D" type="Node2D" parent="commandprocessor/roomhandler/room2"]
+
 [node name="room3" type="StaticBody2D" parent="commandprocessor/roomhandler"]
+modulate = Color(1, 1, 0, 1)
 position = Vector2(-64, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="commandprocessor/roomhandler/room3"]
 position = Vector2(0, -1)
 shape = SubResource("RectangleShape2D_qode4")
+
+[node name="Node2D" type="Node2D" parent="commandprocessor/roomhandler/room3"]
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 1
@@ -113,11 +130,9 @@ layout_mode = 2
 [node name="LineEdit" type="LineEdit" parent="PanelContainer/MarginContainer/VBoxContainer/input"]
 layout_mode = 2
 
-[connection signal="area_entered" from="commandprocessor/roomhandler/Sprite2D/right" to="commandprocessor" method="_on_right_area_entered"]
-[connection signal="area_exited" from="commandprocessor/roomhandler/Sprite2D/right" to="commandprocessor" method="_on_right_area_exited"]
-[connection signal="body_entered" from="commandprocessor/roomhandler/Sprite2D/right" to="." method="_on_right_body_entered"]
 [connection signal="body_entered" from="commandprocessor/roomhandler/Sprite2D/right" to="commandprocessor" method="_on_right_body_entered"]
 [connection signal="area_entered" from="commandprocessor/roomhandler/Sprite2D/left" to="commandprocessor" method="_on_left_area_entered"]
 [connection signal="area_exited" from="commandprocessor/roomhandler/Sprite2D/left" to="." method="_on_left_area_exited"]
 [connection signal="area_exited" from="commandprocessor/roomhandler/Sprite2D/left" to="commandprocessor" method="_on_left_area_exited"]
+[connection signal="body_entered" from="commandprocessor/roomhandler/Sprite2D/left" to="commandprocessor" method="_on_left_body_entered"]
 [connection signal="text_submitted" from="PanelContainer/MarginContainer/VBoxContainer/input/LineEdit" to="." method="_on_line_edit_text_submitted"]
