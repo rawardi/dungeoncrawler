@@ -1,16 +1,16 @@
 [gd_scene load_steps=3 format=3 uid="uid://jl5usptb6ar"]
 
-[ext_resource type="Script" path="res://outputhandler.gd" id="1_2yvwd"]
-[ext_resource type="PackedScene" uid="uid://yidh42mpakql" path="res://response.tscn" id="2_feoko"]
+[ext_resource type="Script" path="res://scripts/outputhandler.gd" id="1_8twti"]
+[ext_resource type="PackedScene" uid="uid://yidh42mpakql" path="res://response.tscn" id="2_3yloa"]
 
 [node name="outputhandler" type="VBoxContainer"]
 offset_right = 320.0
 offset_bottom = 40.0
 size_flags_horizontal = 3
-script = ExtResource("1_2yvwd")
+script = ExtResource("1_8twti")
 
 [node name="inputhistory" type="Label" parent="."]
 layout_mode = 2
 
-[node name="response" parent="." instance=ExtResource("2_feoko")]
+[node name="response" parent="." instance=ExtResource("2_3yloa")]
 layout_mode = 2

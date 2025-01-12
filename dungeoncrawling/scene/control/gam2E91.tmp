@@ -1,0 +1,352 @@
+[gd_scene load_steps=20 format=3 uid="uid://byoj7lgf7v7sx"]
+
+[ext_resource type="Script" path="res://game.gd" id="1_wdty4"]
+[ext_resource type="Script" path="res://commandprocessor.gd" id="2_4ehis"]
+[ext_resource type="Texture2D" uid="uid://dso6lcvu0ekpy" path="res://image/icon.svg" id="3_1dciw"]
+[ext_resource type="Script" path="res://wolf.gd" id="4_st4vm"]
+[ext_resource type="Script" path="res://player.gd" id="5_i6fmt"]
+[ext_resource type="Script" path="res://slime.gd" id="6_wlt3u"]
+[ext_resource type="Script" path="res://dragon.gd" id="7_yjwq0"]
+[ext_resource type="Script" path="res://demonking.gd" id="8_hman0"]
+[ext_resource type="Texture2D" uid="uid://bdg7qamqye2ty" path="res://image/hero.png" id="9_sym0x"]
+[ext_resource type="Texture2D" uid="uid://cew61ugv0aq15" path="res://image/swordnormal.png" id="10_arn7f"]
+[ext_resource type="Texture2D" uid="uid://cs2p0lnpmn51p" path="res://image/orb.png" id="11_ws3ka"]
+[ext_resource type="Texture2D" uid="uid://xfnl5ccu0ibn" path="res://image/bomb.png" id="12_1h6vi"]
+[ext_resource type="Script" path="res://progress_bar.gd" id="13_o2bny"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u1ykk"]
+size = Vector2(74, 102.4)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ikhcg"]
+size = Vector2(85.3334, 102.4)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qode4"]
+size = Vector2(40, 33)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_47otr"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_wklyp"]
+
+[sub_resource type="Theme" id="Theme_1tw7a"]
+default_font_size = 8
+
+[node name="game" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_wdty4")
+
+[node name="commandprocessor" type="Node" parent="."]
+script = ExtResource("2_4ehis")
+
+[node name="roomhandler" type="Node2D" parent="commandprocessor"]
+position = Vector2(436, 107)
+
+[node name="Sprite2D" type="Sprite2D" parent="commandprocessor/roomhandler"]
+position = Vector2(1, 1.00001)
+scale = Vector2(0.375, 0.3125)
+texture = ExtResource("3_1dciw")
+
+[node name="right" type="Area2D" parent="commandprocessor/roomhandler/Sprite2D"]
+position = Vector2(64, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="commandprocessor/roomhandler/Sprite2D/right"]
+position = Vector2(42.6667, 0)
+shape = SubResource("RectangleShape2D_u1ykk")
+one_way_collision_margin = 0.0
+
+[node name="left" type="Area2D" parent="commandprocessor/roomhandler/Sprite2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="commandprocessor/roomhandler/Sprite2D/left"]
+position = Vector2(-106.667, 0)
+shape = SubResource("RectangleShape2D_ikhcg")
+one_way_collision_margin = 0.0
+debug_color = Color(0.997081, 0, 0.173671, 0.42)
+
+[node name="down" type="Area2D" parent="commandprocessor/roomhandler/Sprite2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="commandprocessor/roomhandler/Sprite2D/down"]
+position = Vector2(8.90096e-06, 128)
+shape = SubResource("RectangleShape2D_u1ykk")
+one_way_collision_margin = 0.0
+
+[node name="up" type="Area2D" parent="commandprocessor/roomhandler/Sprite2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="commandprocessor/roomhandler/Sprite2D/up"]
+position = Vector2(-1.14441e-05, -128)
+shape = SubResource("RectangleShape2D_u1ykk")
+one_way_collision_margin = 0.0
+
+[node name="room1" type="StaticBody2D" parent="commandprocessor/roomhandler"]
+modulate = Color(1, 0, 1, 1)
+position = Vector2(0, -1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="commandprocessor/roomhandler/room1"]
+position = Vector2(1, 0)
+shape = SubResource("RectangleShape2D_qode4")
+
+[node name="Node2D" type="Node2D" parent="commandprocessor/roomhandler/room1"]
+position = Vector2(1, 0)
+
+[node name="room2" type="StaticBody2D" parent="commandprocessor/roomhandler"]
+modulate = Color(0, 1, 0, 1)
+position = Vector2(64, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="commandprocessor/roomhandler/room2"]
+position = Vector2(0, -1)
+shape = SubResource("RectangleShape2D_qode4")
+
+[node name="Node2D" type="Node2D" parent="commandprocessor/roomhandler/room2"]
+
+[node name="room3" type="StaticBody2D" parent="commandprocessor/roomhandler"]
+modulate = Color(1, 1, 0, 1)
+position = Vector2(-64, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="commandprocessor/roomhandler/room3"]
+position = Vector2(0, -1)
+shape = SubResource("RectangleShape2D_qode4")
+
+[node name="Node2D" type="Node2D" parent="commandprocessor/roomhandler/room3"]
+
+[node name="room4" type="StaticBody2D" parent="commandprocessor/roomhandler"]
+modulate = Color(1, 0, 1, 1)
+position = Vector2(-1, -40)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="commandprocessor/roomhandler/room4"]
+position = Vector2(1, -1)
+shape = SubResource("RectangleShape2D_qode4")
+
+[node name="Node2D" type="Node2D" parent="commandprocessor/roomhandler/room4"]
+position = Vector2(1, 0)
+
+[node name="room5" type="StaticBody2D" parent="commandprocessor/roomhandler"]
+modulate = Color(0, 1, 0, 1)
+position = Vector2(64, -40)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="commandprocessor/roomhandler/room5"]
+position = Vector2(0, -1)
+shape = SubResource("RectangleShape2D_qode4")
+
+[node name="Node2D" type="Node2D" parent="commandprocessor/roomhandler/room5"]
+
+[node name="room6" type="StaticBody2D" parent="commandprocessor/roomhandler"]
+modulate = Color(1, 1, 0, 1)
+position = Vector2(-64, -40)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="commandprocessor/roomhandler/room6"]
+position = Vector2(0, -1)
+shape = SubResource("RectangleShape2D_qode4")
+
+[node name="Node2D" type="Node2D" parent="commandprocessor/roomhandler/room6"]
+
+[node name="room7" type="StaticBody2D" parent="commandprocessor/roomhandler"]
+modulate = Color(1, 0, 1, 1)
+position = Vector2(-4, -80)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="commandprocessor/roomhandler/room7"]
+shape = SubResource("RectangleShape2D_qode4")
+
+[node name="Node2D" type="Node2D" parent="commandprocessor/roomhandler/room7"]
+position = Vector2(0, 1)
+
+[node name="room8" type="StaticBody2D" parent="commandprocessor/roomhandler"]
+modulate = Color(0, 1, 0, 1)
+position = Vector2(64, -80)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="commandprocessor/roomhandler/room8"]
+position = Vector2(0, -1)
+shape = SubResource("RectangleShape2D_qode4")
+
+[node name="Node2D" type="Node2D" parent="commandprocessor/roomhandler/room8"]
+
+[node name="room9" type="StaticBody2D" parent="commandprocessor/roomhandler"]
+modulate = Color(1, 1, 0, 1)
+position = Vector2(-64, -80)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="commandprocessor/roomhandler/room9"]
+position = Vector2(0, -1)
+shape = SubResource("RectangleShape2D_qode4")
+
+[node name="Node2D" type="Node2D" parent="commandprocessor/roomhandler/room9"]
+
+[node name="room10" type="StaticBody2D" parent="commandprocessor/roomhandler"]
+modulate = Color(1, 1, 0, 1)
+position = Vector2(64, -117)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="commandprocessor/roomhandler/room10"]
+position = Vector2(0, -1)
+shape = SubResource("RectangleShape2D_qode4")
+
+[node name="Node2D" type="Node2D" parent="commandprocessor/roomhandler/room10"]
+
+[node name="wolf" type="CharacterBody2D" parent="commandprocessor"]
+script = ExtResource("4_st4vm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="commandprocessor/wolf"]
+shape = SubResource("CapsuleShape2D_47otr")
+
+[node name="player" type="CharacterBody2D" parent="commandprocessor"]
+script = ExtResource("5_i6fmt")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="commandprocessor/player"]
+shape = SubResource("CapsuleShape2D_wklyp")
+
+[node name="slime" type="Node" parent="commandprocessor"]
+script = ExtResource("6_wlt3u")
+
+[node name="dragon" type="Node" parent="commandprocessor"]
+script = ExtResource("7_yjwq0")
+
+[node name="demonking" type="Node" parent="commandprocessor"]
+script = ExtResource("8_hman0")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -40.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+layout_mode = 2
+theme = SubResource("Theme_1tw7a")
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="imagecontainer" type="PanelContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/imagecontainer"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="player" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/imagecontainer/HBoxContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+
+[node name="player" type="TextureRect" parent="PanelContainer/MarginContainer/VBoxContainer/imagecontainer/HBoxContainer/player"]
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+texture = ExtResource("9_sym0x")
+expand_mode = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/imagecontainer/HBoxContainer/player"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+
+[node name="sword" type="TextureRect" parent="PanelContainer/MarginContainer/VBoxContainer/imagecontainer/HBoxContainer/player/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("10_arn7f")
+expand_mode = 2
+
+[node name="key" type="TextureRect" parent="PanelContainer/MarginContainer/VBoxContainer/imagecontainer/HBoxContainer/player/HBoxContainer"]
+visible = false
+layout_mode = 2
+texture = ExtResource("11_ws3ka")
+expand_mode = 3
+
+[node name="bomb" type="TextureRect" parent="PanelContainer/MarginContainer/VBoxContainer/imagecontainer/HBoxContainer/player/HBoxContainer"]
+visible = false
+layout_mode = 2
+texture = ExtResource("12_1h6vi")
+expand_mode = 3
+
+[node name="hphandler" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/imagecontainer/HBoxContainer"]
+custom_minimum_size = Vector2(10, 68)
+layout_mode = 2
+
+[node name="TextEdit" type="TextEdit" parent="PanelContainer/MarginContainer/VBoxContainer/imagecontainer/HBoxContainer/hphandler"]
+custom_minimum_size = Vector2(30, 15)
+layout_mode = 2
+text = "HP"
+
+[node name="ProgressBar" type="ProgressBar" parent="PanelContainer/MarginContainer/VBoxContainer/imagecontainer/HBoxContainer/hphandler"]
+layout_mode = 2
+script = ExtResource("13_o2bny")
+
+[node name="LineEdit" type="LineEdit" parent="PanelContainer/MarginContainer/VBoxContainer/imagecontainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="enemy" type="BoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/imagecontainer/HBoxContainer"]
+custom_minimum_size = Vector2(64, 69)
+layout_mode = 2
+
+[node name="enemy" type="TextureRect" parent="PanelContainer/MarginContainer/VBoxContainer/imagecontainer/HBoxContainer/enemy"]
+custom_minimum_size = Vector2(64, 69)
+layout_mode = 2
+expand_mode = 2
+
+[node name="Output" type="PanelContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/MarginContainer/VBoxContainer/Output"]
+layout_mode = 2
+follow_focus = true
+
+[node name="result" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/Output/ScrollContainer"]
+layout_mode = 2
+
+[node name="input" type="PanelContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="LineEdit" type="LineEdit" parent="PanelContainer/MarginContainer/VBoxContainer/input"]
+layout_mode = 2
+
+[node name="music" type="AudioStreamPlayer2D" parent="."]
+volume_db = -24.76
+autoplay = true
+
+[node name="soundeffect" type="AudioStreamPlayer2D" parent="."]
+autoplay = true
+
+[connection signal="attacknew" from="commandprocessor" to="commandprocessor/wolf" method="_on_commandprocessor_attacknew"]
+[connection signal="attacknew" from="commandprocessor" to="commandprocessor/slime" method="_on_commandprocessor_attacknew"]
+[connection signal="attacknew" from="commandprocessor" to="commandprocessor/dragon" method="_on_commandprocessor_attacknew"]
+[connection signal="attacknew" from="commandprocessor" to="commandprocessor/demonking" method="_on_commandprocessor_attacknew"]
+[connection signal="attacknormal" from="commandprocessor" to="commandprocessor/wolf" method="_on_commandprocessor_attacknormal"]
+[connection signal="attacknormal" from="commandprocessor" to="commandprocessor/slime" method="_on_commandprocessor_attacknormal"]
+[connection signal="attacknormal" from="commandprocessor" to="commandprocessor/dragon" method="_on_commandprocessor_attacknormal"]
+[connection signal="bombthrown" from="commandprocessor" to="commandprocessor/wolf" method="_on_commandprocessor_bombthrown"]
+[connection signal="bombthrown" from="commandprocessor" to="commandprocessor/slime" method="_on_commandprocessor_bombthrown"]
+[connection signal="bombthrown" from="commandprocessor" to="commandprocessor/dragon" method="_on_commandprocessor_bombthrown"]
+[connection signal="bombthrown" from="commandprocessor" to="commandprocessor/demonking" method="_on_commandprocessor_bombthrown"]
+[connection signal="demonkingbattle" from="commandprocessor" to="commandprocessor" method="_on_demonkingbattle"]
+[connection signal="demonkingfight" from="commandprocessor" to="commandprocessor/demonking" method="_on_commandprocessor_demonkingfight"]
+[connection signal="dragonbattle" from="commandprocessor" to="commandprocessor/dragon" method="_on_commandprocessor_dragonbattle"]
+[connection signal="enemyturn" from="commandprocessor" to="commandprocessor/wolf" method="_on_commandprocessor_enemyturn"]
+[connection signal="enemyturn" from="commandprocessor" to="commandprocessor/slime" method="_on_commandprocessor_enemyturn"]
+[connection signal="enemyturn" from="commandprocessor" to="commandprocessor/dragon" method="_on_commandprocessor_enemyturn"]
+[connection signal="enemyturn" from="commandprocessor" to="commandprocessor/demonking" method="_on_commandprocessor_enemyturn"]
+[connection signal="rested" from="commandprocessor" to="commandprocessor/player" method="_on_commandprocessor_rested"]
+[connection signal="slimebattle" from="commandprocessor" to="commandprocessor/slime" method="_on_commandprocessor_slimebattle"]
+[connection signal="wolfbattle" from="commandprocessor" to="commandprocessor/wolf" method="_on_commandprocessor_wolfbattle"]
+[connection signal="body_entered" from="commandprocessor/roomhandler/Sprite2D/right" to="commandprocessor" method="_on_right_body_entered"]
+[connection signal="area_entered" from="commandprocessor/roomhandler/Sprite2D/left" to="commandprocessor" method="_on_left_area_entered"]
+[connection signal="area_exited" from="commandprocessor/roomhandler/Sprite2D/left" to="." method="_on_left_area_exited"]
+[connection signal="area_exited" from="commandprocessor/roomhandler/Sprite2D/left" to="commandprocessor" method="_on_left_area_exited"]
+[connection signal="body_entered" from="commandprocessor/roomhandler/Sprite2D/left" to="commandprocessor" method="_on_left_body_entered"]
+[connection signal="body_entered" from="commandprocessor/roomhandler/Sprite2D/down" to="commandprocessor" method="_on_down_body_entered"]
+[connection signal="body_entered" from="commandprocessor/roomhandler/Sprite2D/up" to="commandprocessor" method="_on_up_body_entered"]
+[connection signal="attackback" from="commandprocessor/wolf" to="commandprocessor/player" method="_on_wolf_attackback"]
+[connection signal="enemyvanquished" from="commandprocessor/wolf" to="commandprocessor" method="_on_wolf_enemyvanquished"]
+[connection signal="attackback" from="commandprocessor/slime" to="commandprocessor/player" method="_on_slime_attackback"]
+[connection signal="enemyvanquished" from="commandprocessor/slime" to="commandprocessor" method="_on_slime_enemyvanquished"]
+[connection signal="attackback" from="commandprocessor/dragon" to="commandprocessor/player" method="_on_dragon_attackback"]
+[connection signal="enemyvanquished" from="commandprocessor/dragon" to="commandprocessor" method="_on_dragon_enemyvanquished"]
+[connection signal="attackback" from="commandprocessor/demonking" to="commandprocessor/player" method="_on_demonking_attackback"]
+[connection signal="text_submitted" from="PanelContainer/MarginContainer/VBoxContainer/input/LineEdit" to="." method="_on_line_edit_text_submitted"]
