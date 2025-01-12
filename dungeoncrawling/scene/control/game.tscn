@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/control/game.gd" id="1_wdty4"]
 [ext_resource type="Script" path="res://scripts/commandprocessor.gd" id="2_4ehis"]
-[ext_resource type="Texture2D" uid="uid://dso6lcvu0ekpy" path="res://image/icon.svg" id="3_1dciw"]
+[ext_resource type="Texture2D" uid="uid://bbrfumn1p0uwo" path="res://image/map.png" id="3_b0dyh"]
 [ext_resource type="Script" path="res://scripts/character/wolf.gd" id="4_st4vm"]
 [ext_resource type="Script" path="res://scripts/character/player.gd" id="5_i6fmt"]
 [ext_resource type="Script" path="res://scripts/character/slime.gd" id="6_wlt3u"]
@@ -15,13 +15,13 @@
 [ext_resource type="Script" path="res://scripts/character/progress_bar.gd" id="13_o2bny"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u1ykk"]
-size = Vector2(74, 102.4)
+size = Vector2(186.333, 83.2)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ikhcg"]
-size = Vector2(85.3334, 102.4)
+size = Vector2(170.667, 102.4)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qode4"]
-size = Vector2(40, 33)
+size = Vector2(64, 64)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_47otr"]
 
@@ -44,30 +44,41 @@ script = ExtResource("1_wdty4")
 script = ExtResource("2_4ehis")
 
 [node name="roomhandler" type="Node2D" parent="commandprocessor"]
-position = Vector2(436, 107)
+position = Vector2(256, 61)
+scale = Vector2(0.5, 0.5)
+
+[node name="map" type="Sprite2D" parent="commandprocessor/roomhandler"]
+texture_filter = 1
+position = Vector2(-10, -38)
+scale = Vector2(3.6875, 2.3125)
+texture = ExtResource("3_b0dyh")
 
 [node name="Sprite2D" type="Sprite2D" parent="commandprocessor/roomhandler"]
-position = Vector2(1, 1.00001)
-scale = Vector2(0.375, 0.3125)
-texture = ExtResource("3_1dciw")
+position = Vector2(-8, 14)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("9_sym0x")
 
 [node name="right" type="Area2D" parent="commandprocessor/roomhandler/Sprite2D"]
-position = Vector2(64, 0)
+position = Vector2(80, 0)
+scale = Vector2(0.5, 0.5)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="commandprocessor/roomhandler/Sprite2D/right"]
-position = Vector2(42.6667, 0)
+position = Vector2(98.8333, -9.59998)
 shape = SubResource("RectangleShape2D_u1ykk")
 one_way_collision_margin = 0.0
 
 [node name="left" type="Area2D" parent="commandprocessor/roomhandler/Sprite2D"]
+position = Vector2(-18, -2.00003)
+scale = Vector2(0.5, 0.5)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="commandprocessor/roomhandler/Sprite2D/left"]
-position = Vector2(-106.667, 0)
+position = Vector2(-188, -3.99994)
 shape = SubResource("RectangleShape2D_ikhcg")
 one_way_collision_margin = 0.0
 debug_color = Color(0.997081, 0, 0.173671, 0.42)
 
 [node name="down" type="Area2D" parent="commandprocessor/roomhandler/Sprite2D"]
+scale = Vector2(0.5, 0.5)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="commandprocessor/roomhandler/Sprite2D/down"]
 position = Vector2(8.90096e-06, 128)
@@ -75,6 +86,7 @@ shape = SubResource("RectangleShape2D_u1ykk")
 one_way_collision_margin = 0.0
 
 [node name="up" type="Area2D" parent="commandprocessor/roomhandler/Sprite2D"]
+scale = Vector2(0.5, 0.5)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="commandprocessor/roomhandler/Sprite2D/up"]
 position = Vector2(-1.14441e-05, -128)
@@ -83,10 +95,11 @@ one_way_collision_margin = 0.0
 
 [node name="room1" type="StaticBody2D" parent="commandprocessor/roomhandler"]
 modulate = Color(1, 0, 1, 1)
-position = Vector2(0, -1)
+position = Vector2(-4, 14)
+scale = Vector2(0.5, 0.5)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="commandprocessor/roomhandler/room1"]
-position = Vector2(1, 0)
+position = Vector2(-8, 0)
 shape = SubResource("RectangleShape2D_qode4")
 
 [node name="Node2D" type="Node2D" parent="commandprocessor/roomhandler/room1"]
@@ -94,7 +107,8 @@ position = Vector2(1, 0)
 
 [node name="room2" type="StaticBody2D" parent="commandprocessor/roomhandler"]
 modulate = Color(0, 1, 0, 1)
-position = Vector2(64, 0)
+position = Vector2(80, 14)
+scale = Vector2(0.5, 0.5)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="commandprocessor/roomhandler/room2"]
 position = Vector2(0, -1)
@@ -104,7 +118,8 @@ shape = SubResource("RectangleShape2D_qode4")
 
 [node name="room3" type="StaticBody2D" parent="commandprocessor/roomhandler"]
 modulate = Color(1, 1, 0, 1)
-position = Vector2(-64, 0)
+position = Vector2(-96, 14)
+scale = Vector2(0.5, 0.5)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="commandprocessor/roomhandler/room3"]
 position = Vector2(0, -1)
@@ -114,7 +129,8 @@ shape = SubResource("RectangleShape2D_qode4")
 
 [node name="room4" type="StaticBody2D" parent="commandprocessor/roomhandler"]
 modulate = Color(1, 0, 1, 1)
-position = Vector2(-1, -40)
+position = Vector2(-8, -32)
+scale = Vector2(0.5, 0.5)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="commandprocessor/roomhandler/room4"]
 position = Vector2(1, -1)
@@ -125,7 +141,8 @@ position = Vector2(1, 0)
 
 [node name="room5" type="StaticBody2D" parent="commandprocessor/roomhandler"]
 modulate = Color(0, 1, 0, 1)
-position = Vector2(64, -40)
+position = Vector2(80, -32)
+scale = Vector2(0.5, 0.5)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="commandprocessor/roomhandler/room5"]
 position = Vector2(0, -1)
@@ -135,7 +152,8 @@ shape = SubResource("RectangleShape2D_qode4")
 
 [node name="room6" type="StaticBody2D" parent="commandprocessor/roomhandler"]
 modulate = Color(1, 1, 0, 1)
-position = Vector2(-64, -40)
+position = Vector2(-96, -32)
+scale = Vector2(0.5, 0.5)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="commandprocessor/roomhandler/room6"]
 position = Vector2(0, -1)
@@ -146,6 +164,7 @@ shape = SubResource("RectangleShape2D_qode4")
 [node name="room7" type="StaticBody2D" parent="commandprocessor/roomhandler"]
 modulate = Color(1, 0, 1, 1)
 position = Vector2(-4, -80)
+scale = Vector2(0.5, 0.5)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="commandprocessor/roomhandler/room7"]
 shape = SubResource("RectangleShape2D_qode4")
@@ -155,7 +174,8 @@ position = Vector2(0, 1)
 
 [node name="room8" type="StaticBody2D" parent="commandprocessor/roomhandler"]
 modulate = Color(0, 1, 0, 1)
-position = Vector2(64, -80)
+position = Vector2(80, -74)
+scale = Vector2(0.5, 0.5)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="commandprocessor/roomhandler/room8"]
 position = Vector2(0, -1)
@@ -165,7 +185,8 @@ shape = SubResource("RectangleShape2D_qode4")
 
 [node name="room9" type="StaticBody2D" parent="commandprocessor/roomhandler"]
 modulate = Color(1, 1, 0, 1)
-position = Vector2(-64, -80)
+position = Vector2(-96, -80)
+scale = Vector2(0.5, 0.5)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="commandprocessor/roomhandler/room9"]
 position = Vector2(0, -1)
@@ -175,7 +196,8 @@ shape = SubResource("RectangleShape2D_qode4")
 
 [node name="room10" type="StaticBody2D" parent="commandprocessor/roomhandler"]
 modulate = Color(1, 1, 0, 1)
-position = Vector2(64, -117)
+position = Vector2(80, -116)
+scale = Vector2(0.5, 0.5)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="commandprocessor/roomhandler/room10"]
 position = Vector2(0, -1)
@@ -278,14 +300,13 @@ text = "HP"
 layout_mode = 2
 script = ExtResource("13_o2bny")
 
-[node name="LineEdit" type="LineEdit" parent="PanelContainer/MarginContainer/VBoxContainer/imagecontainer/HBoxContainer"]
-layout_mode = 2
-
 [node name="enemy" type="BoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/imagecontainer/HBoxContainer"]
 custom_minimum_size = Vector2(64, 69)
 layout_mode = 2
 
 [node name="enemy" type="TextureRect" parent="PanelContainer/MarginContainer/VBoxContainer/imagecontainer/HBoxContainer/enemy"]
+light_mask = 2
+visibility_layer = 3
 custom_minimum_size = Vector2(64, 69)
 layout_mode = 2
 expand_mode = 2
