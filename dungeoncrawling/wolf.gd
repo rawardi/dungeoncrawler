@@ -41,3 +41,9 @@ func die():
 
 func _on_commandprocessor_wolfbattle() -> void:
 	battlewithwolf=true
+
+
+func _on_commandprocessor_bombthrown() -> void:
+	if battlewithwolf :
+		health=0
+		die()

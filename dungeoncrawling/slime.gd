@@ -42,3 +42,8 @@ func die():
 func _on_commandprocessor_slimebattle() -> void:
 	battlewithslime=true
 	print("battlewithslime true")
+
+
+func _on_commandprocessor_bombthrown() -> void:
+	if battlewithslime :
+		health=0

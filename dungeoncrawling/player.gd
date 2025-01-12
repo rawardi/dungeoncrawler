@@ -14,3 +14,7 @@ func _on_slime_attackback() -> void:
 func _physics_process(delta: float) -> void:
 	if health <= 0:
 		get_tree().change_scene_to_file("res://gameover.tscn")
+
+
+func _on_commandprocessor_rested() -> void:
+	health=100

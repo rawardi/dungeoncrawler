@@ -10,7 +10,16 @@ var start=true
 @onready var commandprocessor=$commandprocessor
 func _ready() -> void:
 	var starting_message=respondlabel.instantiate()
-	starting_message.text=("Type \"start\" to start the game")
+	starting_message.text=("Type \"start\" to start the game
+							o hero help the kingdom, the demon king has risen back again
+								to defeat the demon king you need to take the holy sword 
+								it is located near the fountain of youth.
+								
+			this is the available command under normal state :
+			go and then after the game ask you to go where the option is: up,down,left,right#
+			pick : pick up stuff up
+			inventory ;to check inventory
+			the game only can recieve one word command so please dont use space in between or something as it crash it")
 	write_game_response(starting_message)
 
 

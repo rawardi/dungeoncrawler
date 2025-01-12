@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://byoj7lgf7v7sx"]
+[gd_scene load_steps=15 format=3 uid="uid://byoj7lgf7v7sx"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_q1scb"]
 [ext_resource type="Script" path="res://commandprocessor.gd" id="2_b1lvj"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://player.gd" id="5_rxseu"]
 [ext_resource type="Script" path="res://progress_bar.gd" id="6_3qje6"]
 [ext_resource type="Script" path="res://slime.gd" id="6_t4as1"]
+[ext_resource type="Script" path="res://dragon.gd" id="7_pksj5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u1ykk"]
 size = Vector2(74, 102.4)
@@ -139,7 +140,7 @@ shape = SubResource("RectangleShape2D_qode4")
 
 [node name="room7" type="StaticBody2D" parent="commandprocessor/roomhandler"]
 modulate = Color(1, 0, 1, 1)
-position = Vector2(-8, -64)
+position = Vector2(-9, -63)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="commandprocessor/roomhandler/room7"]
 position = Vector2(8, -17)
@@ -182,6 +183,9 @@ shape = SubResource("CapsuleShape2D_wklyp")
 
 [node name="slime" type="Node" parent="commandprocessor"]
 script = ExtResource("6_t4as1")
+
+[node name="dragon" type="Node" parent="commandprocessor"]
+script = ExtResource("7_pksj5")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 1
@@ -233,6 +237,7 @@ texture = ExtResource("3_e4ldw")
 expand_mode = 2
 
 [node name="key" type="TextureRect" parent="PanelContainer/MarginContainer/VBoxContainer/imagecontainer/HBoxContainer/player/HBoxContainer"]
+visible = false
 layout_mode = 2
 texture = ExtResource("3_e4ldw")
 expand_mode = 2
@@ -281,8 +286,15 @@ layout_mode = 2
 
 [connection signal="attacknormal" from="commandprocessor" to="commandprocessor/wolf" method="_on_commandprocessor_attacknormal"]
 [connection signal="attacknormal" from="commandprocessor" to="commandprocessor/slime" method="_on_commandprocessor_attacknormal"]
+[connection signal="attacknormal" from="commandprocessor" to="commandprocessor/dragon" method="_on_commandprocessor_attacknormal"]
+[connection signal="bombthrown" from="commandprocessor" to="commandprocessor/wolf" method="_on_commandprocessor_bombthrown"]
+[connection signal="bombthrown" from="commandprocessor" to="commandprocessor/slime" method="_on_commandprocessor_bombthrown"]
+[connection signal="bombthrown" from="commandprocessor" to="commandprocessor/dragon" method="_on_commandprocessor_bombthrown"]
+[connection signal="dragonbattle" from="commandprocessor" to="commandprocessor/dragon" method="_on_commandprocessor_dragonbattle"]
 [connection signal="enemyturn" from="commandprocessor" to="commandprocessor/wolf" method="_on_commandprocessor_enemyturn"]
 [connection signal="enemyturn" from="commandprocessor" to="commandprocessor/slime" method="_on_commandprocessor_enemyturn"]
+[connection signal="enemyturn" from="commandprocessor" to="commandprocessor/dragon" method="_on_commandprocessor_enemyturn"]
+[connection signal="rested" from="commandprocessor" to="commandprocessor/player" method="_on_commandprocessor_rested"]
 [connection signal="slimebattle" from="commandprocessor" to="commandprocessor/slime" method="_on_commandprocessor_slimebattle"]
 [connection signal="wolfbattle" from="commandprocessor" to="commandprocessor/wolf" method="_on_commandprocessor_wolfbattle"]
 [connection signal="body_entered" from="commandprocessor/roomhandler/Sprite2D/right" to="commandprocessor" method="_on_right_body_entered"]
