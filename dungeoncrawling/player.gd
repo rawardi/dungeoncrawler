@@ -18,3 +18,11 @@ func _physics_process(delta: float) -> void:
 
 func _on_commandprocessor_rested() -> void:
 	health=100
+
+
+func _on_dragon_attackback() -> void:
+	health=health-40
+
+
+func _on_demonking_attackback() -> void:
+	health=health-40

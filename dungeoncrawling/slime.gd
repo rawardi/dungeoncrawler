@@ -47,3 +47,7 @@ func _on_commandprocessor_slimebattle() -> void:
 func _on_commandprocessor_bombthrown() -> void:
 	if battlewithslime :
 		health=0
+
+
+func _on_commandprocessor_attacknew() -> void:
+	pass # Replace with function body.

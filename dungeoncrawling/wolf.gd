@@ -47,3 +47,7 @@ func _on_commandprocessor_bombthrown() -> void:
 	if battlewithwolf :
 		health=0
 		die()
+
+
+func _on_commandprocessor_attacknew() -> void:
+	pass # Replace with function body.

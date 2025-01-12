@@ -60,3 +60,7 @@ func _on_commandprocessor_bombthrown() -> void:
 		else :
 			health=100
 			die()
+
+
+func _on_commandprocessor_attacknew() -> void:
+	pass # Replace with function body.

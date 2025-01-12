@@ -78,12 +78,22 @@ func _physics_process(delta: float) -> void:
 
 
 
-
-func  process(input:String) :
+signal demonkingbattle
+var demonkingbattlestart =false
+func  process(input:String) :#
 	if currentroom == room10 :
-		match  input :
-			"accept" :
-				get_tree()
+		if demonkingbattlestart == false :
+			match  input :
+				"accept" :
+					get_tree().change_scene_to_file("res://happyend.tscn")
+				_:
+					battlestate =true
+					demonkingbattlestart = true
+					emit_signal("demonkingfight")
+					return "the demon king sighed with your reaction , she draws her sword  then softly speak
+							then let the rondo  madness of this world spins and spin"
+		else :
+			return battlestart(input)
 	if battlestate :
 		print("battlestart")
 		return battlestart(input)
@@ -125,6 +135,9 @@ func  process(input:String) :
 						if demonkingmiasma :
 							return "the miasma is too strong , you will die , maybe an artifact of the goddess can help reduce it"
 						else :
+							playerpos.global_position=targetroomup.global_position
+							currentroom=targetroomup
+							roomcheck()
 							return "you walk bravely into the demon king castle for the final showdown"
 					else :
 						travel=false
@@ -186,7 +199,8 @@ func help(input:String) :
 			go :and then after the game ask you to go where the option is: north , south , west , east
 			pick : pick up stuff up
 			inventory ;to check inventory
-			orb : artifact of goddes that help will help you find it "
+			orb : artifact of goddes that help will help you find it 
+			if you are truly lost then type hint"
 
 func pickitem(input:String) :
 	if currentroom==room4 :
@@ -201,7 +215,15 @@ func pickitem(input:String) :
 		if dragondefeat : 
 			holyswordget=true
 			pickable=false
+			newsword = true
 			return "youve taken the holy sword , now you are much more stronger , this may be enough to defeat the demon king"
+	if currentroom== room9 :
+		var bombtake =false
+		if bombtake :
+			return "youve already taken the bomb"
+		else :
+			bomb=true
+			return "you took the bomb"
 	else :
 		return "theres nothing to pick on"
 
@@ -300,7 +322,7 @@ func roomcheck() :
 	elif currentroom == room8 :
 		roomdescription.text="the castle of the demon king stands before you, the ominous aura makes it hard to even stand near it"
 	elif  currentroom == room9 :
-		roomdescription.text="this is room 9"
+		roomdescription.text="somehow you find a stash of bomb , should you pick it?"
 	elif currentroom == room10 :
 		roomdescription.text="stand before now is the demon king itself, you ready your sword.
 								the demon king open her mouth 
@@ -371,3 +393,7 @@ func _on_dragon_enemyvanquished() -> void:
 	enemy.texture=null
 	dragondefeat=true
 	pickable=true
+
+
+func _on_demonkingbattle() -> void:
+	demonkingbattlestart=true

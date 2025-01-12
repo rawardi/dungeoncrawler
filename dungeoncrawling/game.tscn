@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://byoj7lgf7v7sx"]
+[gd_scene load_steps=16 format=3 uid="uid://byoj7lgf7v7sx"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_q1scb"]
 [ext_resource type="Script" path="res://commandprocessor.gd" id="2_b1lvj"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://progress_bar.gd" id="6_3qje6"]
 [ext_resource type="Script" path="res://slime.gd" id="6_t4as1"]
 [ext_resource type="Script" path="res://dragon.gd" id="7_pksj5"]
+[ext_resource type="Script" path="res://demonking.gd" id="8_nntij"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u1ykk"]
 size = Vector2(74, 102.4)
@@ -39,10 +40,10 @@ script = ExtResource("1_q1scb")
 script = ExtResource("2_b1lvj")
 
 [node name="roomhandler" type="Node2D" parent="commandprocessor"]
-position = Vector2(437, 97)
+position = Vector2(436, 107)
 
 [node name="Sprite2D" type="Sprite2D" parent="commandprocessor/roomhandler"]
-position = Vector2(0, 1.19209e-07)
+position = Vector2(1, 1.00001)
 scale = Vector2(0.375, 0.3125)
 texture = ExtResource("3_e4ldw")
 
@@ -78,14 +79,14 @@ one_way_collision_margin = 0.0
 
 [node name="room1" type="StaticBody2D" parent="commandprocessor/roomhandler"]
 modulate = Color(1, 0, 1, 1)
-position = Vector2(-8, 16)
+position = Vector2(0, -1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="commandprocessor/roomhandler/room1"]
-position = Vector2(8, -17)
+position = Vector2(1, 0)
 shape = SubResource("RectangleShape2D_qode4")
 
 [node name="Node2D" type="Node2D" parent="commandprocessor/roomhandler/room1"]
-position = Vector2(8, -16)
+position = Vector2(1, 0)
 
 [node name="room2" type="StaticBody2D" parent="commandprocessor/roomhandler"]
 modulate = Color(0, 1, 0, 1)
@@ -109,14 +110,14 @@ shape = SubResource("RectangleShape2D_qode4")
 
 [node name="room4" type="StaticBody2D" parent="commandprocessor/roomhandler"]
 modulate = Color(1, 0, 1, 1)
-position = Vector2(-8, -24)
+position = Vector2(-1, -40)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="commandprocessor/roomhandler/room4"]
-position = Vector2(8, -17)
+position = Vector2(1, -1)
 shape = SubResource("RectangleShape2D_qode4")
 
 [node name="Node2D" type="Node2D" parent="commandprocessor/roomhandler/room4"]
-position = Vector2(8, -16)
+position = Vector2(1, 0)
 
 [node name="room5" type="StaticBody2D" parent="commandprocessor/roomhandler"]
 modulate = Color(0, 1, 0, 1)
@@ -140,14 +141,13 @@ shape = SubResource("RectangleShape2D_qode4")
 
 [node name="room7" type="StaticBody2D" parent="commandprocessor/roomhandler"]
 modulate = Color(1, 0, 1, 1)
-position = Vector2(-9, -63)
+position = Vector2(-4, -80)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="commandprocessor/roomhandler/room7"]
-position = Vector2(8, -17)
 shape = SubResource("RectangleShape2D_qode4")
 
 [node name="Node2D" type="Node2D" parent="commandprocessor/roomhandler/room7"]
-position = Vector2(8, -16)
+position = Vector2(0, 1)
 
 [node name="room8" type="StaticBody2D" parent="commandprocessor/roomhandler"]
 modulate = Color(0, 1, 0, 1)
@@ -169,6 +169,16 @@ shape = SubResource("RectangleShape2D_qode4")
 
 [node name="Node2D" type="Node2D" parent="commandprocessor/roomhandler/room9"]
 
+[node name="room10" type="StaticBody2D" parent="commandprocessor/roomhandler"]
+modulate = Color(1, 1, 0, 1)
+position = Vector2(64, -117)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="commandprocessor/roomhandler/room10"]
+position = Vector2(0, -1)
+shape = SubResource("RectangleShape2D_qode4")
+
+[node name="Node2D" type="Node2D" parent="commandprocessor/roomhandler/room10"]
+
 [node name="wolf" type="CharacterBody2D" parent="commandprocessor"]
 script = ExtResource("4_7m8cr")
 
@@ -186,6 +196,9 @@ script = ExtResource("6_t4as1")
 
 [node name="dragon" type="Node" parent="commandprocessor"]
 script = ExtResource("7_pksj5")
+
+[node name="demonking" type="Node" parent="commandprocessor"]
+script = ExtResource("8_nntij")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 1
@@ -246,6 +259,11 @@ expand_mode = 2
 custom_minimum_size = Vector2(10, 68)
 layout_mode = 2
 
+[node name="TextEdit" type="TextEdit" parent="PanelContainer/MarginContainer/VBoxContainer/imagecontainer/HBoxContainer/hphandler"]
+custom_minimum_size = Vector2(30, 15)
+layout_mode = 2
+text = "HP"
+
 [node name="ProgressBar" type="ProgressBar" parent="PanelContainer/MarginContainer/VBoxContainer/imagecontainer/HBoxContainer/hphandler"]
 layout_mode = 2
 script = ExtResource("6_3qje6")
@@ -284,16 +302,28 @@ layout_mode = 2
 [node name="LineEdit" type="LineEdit" parent="PanelContainer/MarginContainer/VBoxContainer/input"]
 layout_mode = 2
 
+[node name="music" type="AudioStreamPlayer2D" parent="."]
+
+[node name="soundeffect" type="AudioStreamPlayer2D" parent="."]
+
+[connection signal="attacknew" from="commandprocessor" to="commandprocessor/wolf" method="_on_commandprocessor_attacknew"]
+[connection signal="attacknew" from="commandprocessor" to="commandprocessor/slime" method="_on_commandprocessor_attacknew"]
+[connection signal="attacknew" from="commandprocessor" to="commandprocessor/dragon" method="_on_commandprocessor_attacknew"]
+[connection signal="attacknew" from="commandprocessor" to="commandprocessor/demonking" method="_on_commandprocessor_attacknew"]
 [connection signal="attacknormal" from="commandprocessor" to="commandprocessor/wolf" method="_on_commandprocessor_attacknormal"]
 [connection signal="attacknormal" from="commandprocessor" to="commandprocessor/slime" method="_on_commandprocessor_attacknormal"]
 [connection signal="attacknormal" from="commandprocessor" to="commandprocessor/dragon" method="_on_commandprocessor_attacknormal"]
 [connection signal="bombthrown" from="commandprocessor" to="commandprocessor/wolf" method="_on_commandprocessor_bombthrown"]
 [connection signal="bombthrown" from="commandprocessor" to="commandprocessor/slime" method="_on_commandprocessor_bombthrown"]
 [connection signal="bombthrown" from="commandprocessor" to="commandprocessor/dragon" method="_on_commandprocessor_bombthrown"]
+[connection signal="bombthrown" from="commandprocessor" to="commandprocessor/demonking" method="_on_commandprocessor_bombthrown"]
+[connection signal="demonkingbattle" from="commandprocessor" to="commandprocessor" method="_on_demonkingbattle"]
+[connection signal="demonkingfight" from="commandprocessor" to="commandprocessor/demonking" method="_on_commandprocessor_demonkingfight"]
 [connection signal="dragonbattle" from="commandprocessor" to="commandprocessor/dragon" method="_on_commandprocessor_dragonbattle"]
 [connection signal="enemyturn" from="commandprocessor" to="commandprocessor/wolf" method="_on_commandprocessor_enemyturn"]
 [connection signal="enemyturn" from="commandprocessor" to="commandprocessor/slime" method="_on_commandprocessor_enemyturn"]
 [connection signal="enemyturn" from="commandprocessor" to="commandprocessor/dragon" method="_on_commandprocessor_enemyturn"]
+[connection signal="enemyturn" from="commandprocessor" to="commandprocessor/demonking" method="_on_commandprocessor_enemyturn"]
 [connection signal="rested" from="commandprocessor" to="commandprocessor/player" method="_on_commandprocessor_rested"]
 [connection signal="slimebattle" from="commandprocessor" to="commandprocessor/slime" method="_on_commandprocessor_slimebattle"]
 [connection signal="wolfbattle" from="commandprocessor" to="commandprocessor/wolf" method="_on_commandprocessor_wolfbattle"]
@@ -308,4 +338,7 @@ layout_mode = 2
 [connection signal="enemyvanquished" from="commandprocessor/wolf" to="commandprocessor" method="_on_wolf_enemyvanquished"]
 [connection signal="attackback" from="commandprocessor/slime" to="commandprocessor/player" method="_on_slime_attackback"]
 [connection signal="enemyvanquished" from="commandprocessor/slime" to="commandprocessor" method="_on_slime_enemyvanquished"]
+[connection signal="attackback" from="commandprocessor/dragon" to="commandprocessor/player" method="_on_dragon_attackback"]
+[connection signal="enemyvanquished" from="commandprocessor/dragon" to="commandprocessor" method="_on_dragon_enemyvanquished"]
+[connection signal="attackback" from="commandprocessor/demonking" to="commandprocessor/player" method="_on_demonking_attackback"]
 [connection signal="text_submitted" from="PanelContainer/MarginContainer/VBoxContainer/input/LineEdit" to="." method="_on_line_edit_text_submitted"]
