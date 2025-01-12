@@ -1,10 +1,12 @@
-[gd_scene load_steps=12 format=3 uid="uid://byoj7lgf7v7sx"]
+[gd_scene load_steps=14 format=3 uid="uid://byoj7lgf7v7sx"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_q1scb"]
 [ext_resource type="Script" path="res://commandprocessor.gd" id="2_b1lvj"]
-[ext_resource type="Texture2D" uid="uid://dso6lcvu0ekpy" path="res://icon.svg" id="3_e4ldw"]
+[ext_resource type="Texture2D" uid="uid://dso6lcvu0ekpy" path="res://image/icon.svg" id="3_e4ldw"]
 [ext_resource type="Script" path="res://wolf.gd" id="4_7m8cr"]
 [ext_resource type="Script" path="res://player.gd" id="5_rxseu"]
+[ext_resource type="Script" path="res://progress_bar.gd" id="6_3qje6"]
+[ext_resource type="Script" path="res://slime.gd" id="6_t4as1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u1ykk"]
 size = Vector2(74, 102.4)
@@ -178,11 +180,15 @@ script = ExtResource("5_rxseu")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="commandprocessor/player"]
 shape = SubResource("CapsuleShape2D_wklyp")
 
+[node name="slime" type="Node" parent="commandprocessor"]
+script = ExtResource("6_t4as1")
+
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = -40.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -207,18 +213,54 @@ custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="image_room" type="TextureRect" parent="PanelContainer/MarginContainer/VBoxContainer/imagecontainer/HBoxContainer"]
+[node name="player" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/imagecontainer/HBoxContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+
+[node name="player" type="TextureRect" parent="PanelContainer/MarginContainer/VBoxContainer/imagecontainer/HBoxContainer/player"]
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+texture = ExtResource("3_e4ldw")
+expand_mode = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/imagecontainer/HBoxContainer/player"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+
+[node name="sword" type="TextureRect" parent="PanelContainer/MarginContainer/VBoxContainer/imagecontainer/HBoxContainer/player/HBoxContainer"]
 layout_mode = 2
 texture = ExtResource("3_e4ldw")
-expand_mode = 3
+expand_mode = 2
+
+[node name="key" type="TextureRect" parent="PanelContainer/MarginContainer/VBoxContainer/imagecontainer/HBoxContainer/player/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("3_e4ldw")
+expand_mode = 2
+
+[node name="hphandler" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/imagecontainer/HBoxContainer"]
+custom_minimum_size = Vector2(10, 68)
+layout_mode = 2
+
+[node name="ProgressBar" type="ProgressBar" parent="PanelContainer/MarginContainer/VBoxContainer/imagecontainer/HBoxContainer/hphandler"]
+layout_mode = 2
+script = ExtResource("6_3qje6")
 
 [node name="LineEdit" type="LineEdit" parent="PanelContainer/MarginContainer/VBoxContainer/imagecontainer/HBoxContainer"]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="PanelContainer/MarginContainer/VBoxContainer/imagecontainer/HBoxContainer"]
+[node name="enemy" type="BoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/imagecontainer/HBoxContainer"]
+custom_minimum_size = Vector2(64, 69)
+layout_mode = 2
+
+[node name="enemy" type="TextureRect" parent="PanelContainer/MarginContainer/VBoxContainer/imagecontainer/HBoxContainer/enemy"]
+custom_minimum_size = Vector2(64, 69)
+layout_mode = 2
+expand_mode = 2
+
+[node name="something" type="TextureRect" parent="PanelContainer/MarginContainer/VBoxContainer/imagecontainer/HBoxContainer"]
 layout_mode = 2
 texture = ExtResource("3_e4ldw")
-expand_mode = 3
+expand_mode = 2
 
 [node name="Output" type="PanelContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -238,7 +280,11 @@ layout_mode = 2
 layout_mode = 2
 
 [connection signal="attacknormal" from="commandprocessor" to="commandprocessor/wolf" method="_on_commandprocessor_attacknormal"]
+[connection signal="attacknormal" from="commandprocessor" to="commandprocessor/slime" method="_on_commandprocessor_attacknormal"]
 [connection signal="enemyturn" from="commandprocessor" to="commandprocessor/wolf" method="_on_commandprocessor_enemyturn"]
+[connection signal="enemyturn" from="commandprocessor" to="commandprocessor/slime" method="_on_commandprocessor_enemyturn"]
+[connection signal="slimebattle" from="commandprocessor" to="commandprocessor/slime" method="_on_commandprocessor_slimebattle"]
+[connection signal="wolfbattle" from="commandprocessor" to="commandprocessor/wolf" method="_on_commandprocessor_wolfbattle"]
 [connection signal="body_entered" from="commandprocessor/roomhandler/Sprite2D/right" to="commandprocessor" method="_on_right_body_entered"]
 [connection signal="area_entered" from="commandprocessor/roomhandler/Sprite2D/left" to="commandprocessor" method="_on_left_area_entered"]
 [connection signal="area_exited" from="commandprocessor/roomhandler/Sprite2D/left" to="." method="_on_left_area_exited"]
@@ -248,4 +294,6 @@ layout_mode = 2
 [connection signal="body_entered" from="commandprocessor/roomhandler/Sprite2D/up" to="commandprocessor" method="_on_up_body_entered"]
 [connection signal="attackback" from="commandprocessor/wolf" to="commandprocessor/player" method="_on_wolf_attackback"]
 [connection signal="enemyvanquished" from="commandprocessor/wolf" to="commandprocessor" method="_on_wolf_enemyvanquished"]
+[connection signal="attackback" from="commandprocessor/slime" to="commandprocessor/player" method="_on_slime_attackback"]
+[connection signal="enemyvanquished" from="commandprocessor/slime" to="commandprocessor" method="_on_slime_enemyvanquished"]
 [connection signal="text_submitted" from="PanelContainer/MarginContainer/VBoxContainer/input/LineEdit" to="." method="_on_line_edit_text_submitted"]

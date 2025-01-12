@@ -24,17 +24,47 @@ var targetroomup :Node2D
 var can_go_down=false
 var targetroomdown :Node2D 
 
+
+
+#enemytextures
+var enemy_textures: Array = [
+	"res://image/icon.svg",
+	"res://image/x2af_jbuThWxC_cQ6l8rsQ.webp"
+]
 #handle battle#
+@onready var enemy=$"../PanelContainer/MarginContainer/VBoxContainer/imagecontainer/HBoxContainer/enemy/enemy"
 var battlestate = false
 signal attacknormal
 signal  attacknew
 signal enemyturn
 var newsword =false
 var guard=false
-#flag for enemy defeat
+#flag for enemies
+signal wolfbattle
+signal slimebattle
+signal demonkingfight
 var wolfdefeat =false
+var slimedefeat =false
+# pick handle
+var pickable=false
+@onready var orb= $"../PanelContainer/MarginContainer/VBoxContainer/imagecontainer/HBoxContainer/player/HBoxContainer/key"
+@onready var sword= $"../PanelContainer/MarginContainer/VBoxContainer/imagecontainer/HBoxContainer/player/HBoxContainer/sword"
+var orbget =false
+
 func _ready() -> void:
 	currentroom=room1
+
+
+func _physics_process(delta: float) -> void:
+	if orbget :
+		orb.visible=true
+
+
+
+
+
+
+
 
 func  process(input:String) :
 	if battlestate :
@@ -113,9 +143,6 @@ func  process(input:String) :
 				return checkinventory(input)
 
 
-
-
-
 func help(input:String) :
 	return "this is the available command under normal state :
 			go and then after the game ask you to go where the option is: up,down,left,right#
@@ -123,7 +150,16 @@ func help(input:String) :
 			inventory ;to check inventory"
 
 func pickitem(input:String) :
-	return "pick fucntion worked"
+	if currentroom==room4 :
+		if orbget :
+			return "the orb in the pedestal is no more , the surrounding demonic miasma grows stronger
+					theres nothing left to do here"
+		else :
+			orbget = true
+			pickable=false
+			return "youve picked the orb and store it inside your inventory"
+	else :
+		return "theres nothing to pick on"
 
 func checkinventory(input:String) :
 	return "check Inventory"
@@ -153,19 +189,33 @@ func _on_up_body_entered(body: Node2D) -> void:
 func roomcheck() :
 	var roomdescription=response.instantiate()
 	if currentroom == room1:
-		roomdescription.text="this is room 1"
+		roomdescription.text="o hero help the kingdom, the demon king has risen back again
+								to defeat the demon king you need to take the holy sword 
+								it is located near the fountain of youth."
 	elif currentroom == room2 :
 		if wolfdefeat :
 			roomdescription.text="the wolf here has beeen defeated , the miasma of the demon king has subsided"
 		else :
 			battlestate =true
-			print(battlestate)
+			emit_signal("wolfbattle")
+			enemy.texture=load(enemy_textures[1])
 			roomdescription.text="the quiet atmosphere of the demonic forrest seeeps eerily , 
 			suddenly an wolf attack you out of nowhere"
 	elif currentroom == room3:
-		roomdescription.text="this is room 3"
+		if slimedefeat :
+			roomdescription.text="the slime here has been defeated , yet the miasma remain"
+		else :
+				roomdescription.text="the  beautiful lake that usually shines clear , now tainted by miasma
+								its now errily creepy , as you walk nearer slime suddenly attacks you!"
+				battlestate =true
+				emit_signal("slimebattle")
+				enemy.texture=load(enemy_textures[0])
 	elif currentroom == room4 :
-		roomdescription.text="this is room 4"
+		roomdescription.text="there is a small white pedestal in front of you ,
+								the demonic miasma seems to be repelled and you dont feel any demonic presence nearby
+								inside the pedestal , theres an orb that exude holy energy
+								pick it up?"
+		pickable=true
 	elif currentroom == room5:
 		roomdescription.text="this is room 5"
 	elif currentroom == room6 :
@@ -193,6 +243,8 @@ func battlestart(input:String) :
 			return "you guarded"
 		"help" :
 			return helpbattle(input)
+		_:
+			return "thats not what you do in battle"
 
 
 
@@ -206,5 +258,14 @@ func helpbattle(input:String) :
 func _on_wolf_enemyvanquished() -> void:
 	battlestate=false
 	var victoryprint=response.instantiate()
-	victoryprint.text="youhave defeated the enemy youmay now procceed"
+	victoryprint.text="you have defeated the enemy you may now procceed"
 	result.add_child(victoryprint)
+	enemy.texture=null
+
+
+func _on_slime_enemyvanquished() -> void:
+	battlestate=false
+	var victoryprint=response.instantiate()
+	victoryprint.text="you have defeated the enemy you may now procceed"
+	result.add_child(victoryprint)
+	enemy.texture=null

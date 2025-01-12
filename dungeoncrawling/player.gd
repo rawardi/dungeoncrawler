@@ -1,13 +1,15 @@
 extends CharacterBody2D
 
-var health=100
-
+@export var health=100
 
 
 
 func _on_wolf_attackback() -> void:
 	health=health-20
 
+
+func _on_slime_attackback() -> void:
+	health=health-10
 
 func _physics_process(delta: float) -> void:
 	if health <= 0:

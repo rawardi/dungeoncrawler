@@ -1,7 +1,7 @@
-extends CharacterBody2D
+extends Node
 
 
-var battlewithwolf=false
+var battlewithslime=false
 var health=20
 signal attackback
 signal enemyvanquished
@@ -16,17 +16,17 @@ func attack() :
 	result.add_child(enemyattack)
 
 func takedamge() :
-	health=health-5
+	health=health-10
 	print ("enemy health :")
 	print(health)
 	die()
 func _on_commandprocessor_attacknormal() -> void:
-	if battlewithwolf :
+	if battlewithslime :
 		takedamge()
 		attack()
 
 func _on_commandprocessor_enemyturn() -> void:
-	if battlewithwolf :
+	if battlewithslime :
 		attack()
 
 
@@ -36,8 +36,9 @@ func die():
 		emit_signal("enemyvanquished")
 		enemyattack.text="enemy is defeated the hero has triumph"
 		result.add_child(enemyattack)
-		battlewithwolf=false
+		battlewithslime=false
 
 
-func _on_commandprocessor_wolfbattle() -> void:
-	battlewithwolf=true
+func _on_commandprocessor_slimebattle() -> void:
+	battlewithslime=true
+	print("battlewithslime true")
